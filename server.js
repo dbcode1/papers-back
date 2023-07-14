@@ -12,7 +12,6 @@ app.use(
   })
 );
 
-
 connectDB();
 require("dotenv").config();
 app.use(express.json({ extended: false }));
@@ -23,6 +22,10 @@ process.env.DEBUG = true;
 
 //  apply middleware to all requests
 //app.use(limiter);
+
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
 
 app.use("/search-news", require("./routes/searchNews"));
 app.use("/auth", require("./routes/auth"));
