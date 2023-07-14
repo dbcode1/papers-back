@@ -12,6 +12,7 @@ app.use(
   })
 );
 
+
 connectDB();
 require("dotenv").config();
 app.use(express.json({ extended: false }));
