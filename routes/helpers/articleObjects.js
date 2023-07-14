@@ -1,4 +1,4 @@
-module.exports = function (arr1, arr2) {
+module.exports = function (arr1, arr2, arr3) {
   const filteredNews = [];
   // map through all three arrays mapping data to new objects
   arr1.map((item) => {
@@ -24,23 +24,27 @@ module.exports = function (arr1, arr2) {
       return;
     }
 
-  filteredNews.push({
-    title: item.headline.main,
-    pub_date: item.pub_date,
-    img: "https://www.nytimes.com/" + item.multimedia[0].url,
-    url: item.web_url,
-  });
+    filteredNews.push({
+      title: item.headline.main,
+      pub_date: item.pub_date,
+      img: "https://www.nytimes.com/" + item.multimedia[0].url,
+      url: item.web_url,
+    });
   });
 
-  // arr3.map((item) => {
-  //   filteredNews.push({
-  //     title: item.title,
-  //     pub_date: item.publishedAt,
-  //     img: item.urlToImage,
-  //     url: item.url,
-  //     abstract: item.content,
-  //   });
-  // });
+  arr3.map((item) => {
+    if (item.urlToImage == null) {
+      return;
+    }
+    console.log(item);
+    filteredNews.push({
+      title: item.title,
+      pub_date: item.publishedAt,
+      img: item.urlToImage,
+      url: item.url,
+      abstract: item.content,
+    });
+  });
 
   return filteredNews;
 };

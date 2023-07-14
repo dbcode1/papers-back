@@ -17,22 +17,22 @@ router.get("/", async (req, res) => {
     const gaurdianKeyword = `https://content.guardianapis.com/search?q=${query}&show-fields=thumbnail&page-size=50&api-key=${process.env.GAURDIAN_API_KEY}`;
     const nytKeyword = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&page=1
 			&api-key=${process.env.NYT_API_KEY}`;
-    //const newsApi = `https://newsapi.org/v2/everything?q=Biden&pageSize=40&apiKey=b05a05005ec84712a23fe01b017a443b
+    const newsApi = `https://newsapi.org/v2/everything?q=${query}&pageSize=40&apiKey=${process.env.NEWS_API_KEY}`;
     //}`;
     // call apis
     const gaurdianReq = await axios.get(gaurdianKeyword);
 
     const nytKeywordReq = await axios.get(nytKeyword);
-    //const newsApiReq = await axios.get(newsApi);
-
+    const newsApiReq = await axios.get(newsApi);
     //   // filter out metadata
     const gaurdianResults = gaurdianReq.data.response.results;
     const nytResults = nytKeywordReq.data.response.docs;
-    //const newsApiResults = newsApiReq.data.articles;
+    const newsApiResults = newsApiReq.data.articles;
+
     const allArticles = articleObjects(
       gaurdianResults,
-      //newsApiResults,
-      nytResults
+      nytResults,
+      newsApiResults
     );
     // randomize results with Fischer-Yates algorithm
     const randomResults = (array) => {
