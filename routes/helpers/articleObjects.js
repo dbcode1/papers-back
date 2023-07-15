@@ -36,11 +36,7 @@ module.exports = function (arr1, arr2, arr3) {
     if (item.urlToImage == null) {
       return;
     }
-<<<<<<< HEAD
-    console.log(item);
-=======
-    console.log(item)
->>>>>>> 3bfc958af97aab186e0a794352cd6f6e70817868
+
     filteredNews.push({
       title: item.title,
       pub_date: item.publishedAt,
