@@ -14,7 +14,7 @@ router.get('/', auth, async (req, res) => {
 		const user = await User.findById(req.user.id).select('-password');
 		res.json(user);
 	} catch (err) {
-		console.error(err.message);
+		console.error("get user error", err.message);
 		res.status(500).send('Server Error');
 	}
 });
@@ -26,7 +26,7 @@ router.post('/login',
 }), async (req, res) => {
   
   const errors = validationResult(req);
-  console.log("errors", errors.array())
+  console.log("login errors", errors.array())
   if (!errors.isEmpty()) {
       return res.status(400).json({
           success: false,
@@ -36,16 +36,20 @@ router.post('/login',
 
 
 	const { email, password } = req.body;
-	
+	console.log("credentials", email, password)
+
 	try {
 		let user = await User.findOne({ email });
-
-		if (!user) {
-			return res.status(400).send({ errors: [{ msg: 'No user exists' }] });
+		if (!user || user === null) {
+      console.log("no user")
+      
+      return res
+      .status(400)
+      .json({ errors: [{ msg: "No user exists" }] });
 		}
 
-		const isMatch = await bcrypt.compare(password, user.password);
-
+		 const isMatch = await bcrypt.compare(password, user.password);
+    console.log(isMatch)
 		if (!isMatch) {
 			console.log('no password match');
 			return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
